@@ -1,34 +1,34 @@
-import sys, time
-
+import sys
+import time
 
 fallback = [   
-            "         .?77777777777777$.              ",
-            "          777..777777777777$+            ",
-            "         .77    7777777777$$$            ",
-            "         .777 .7777777777$$$$            ",           
-            "         .7777777777777$$$$$$            ",
-            "         ..........:77$$$$$$$            ",           
-            "  .77777777777777777$$$$$$$$$.=======.   ",  
-            " 777777777777777777$$$$$$$$$$.========   ",  
-            "7777777777777777$$$$$$$$$$$$$.=========  ", 
-            "77777777777777$$$$$$$$$$$$$$$.=========  ",
-            "777777777777$$$$$$$$$$$$$$$$ :========+. ",
-            "77777777777$$$$$$$$$$$$$$+..=========++~ ",
-            "777777777$$..~=====================+++++ ",
-            "77777777$~.~~~~=~=================+++++. ",
-            "777777$$$.~~~===================+++++++. ",
-            "77777$$$$.~~==================++++++++:  ", 
-            " 7$$$$$$$.==================++++++++++.  ", 
-            " .,$$$$$$.================++++++++++~.   ",  
-            "         .=========~.........            ",           
-            "         .=============++++++            ",           
-            "         .===========+++..+++            ",           
-            "         .==========+++.  .++            ",          
-            "          ,=======++++++,,++,            ",           
-            "         . .=====+++++++++=.             ",            
-            "               ..~+=...                  ",     
-            "                 '''                     "
-        ]
+    "         .?77777777777777$.              ",
+    "          777..777777777777$+            ",
+    "         .77    7777777777$$$            ",
+    "         .777 .7777777777$$$$            ",           
+    "         .7777777777777$$$$$$            ",
+    "         ..........:77$$$$$$$            ",           
+    "  .77777777777777777$$$$$$$$$.=======.   ",  
+    " 777777777777777777$$$$$$$$$$.========   ",  
+    "7777777777777777$$$$$$$$$$$$$.=========  ", 
+    "77777777777777$$$$$$$$$$$$$$$.=========  ",
+    "777777777777$$$$$$$$$$$$$$$$ :========+. ",
+    "77777777777$$$$$$$$$$$$$$+..=========++~ ",
+    "777777777$$..~=====================+++++ ",
+    "77777777$~.~~~~=~=================+++++. ",
+    "777777$$$.~~~===================+++++++. ",
+    "77777$$$$.~~==================++++++++:  ", 
+    " 7$$$$$$$.==================++++++++++.  ", 
+    " .,$$$$$$.================++++++++++~.   ",  
+    "         .=========~.........            ",           
+    "         .=============++++++            ",           
+    "         .===========+++..+++            ",           
+    "         .==========+++.  .++            ",          
+    "          ,=======++++++,,++,            ",           
+    "         . .=====+++++++++=.             ",            
+    "               ..~+=...                  ",     
+    "                 '''                     "
+]
 
 def calculate_checksum(filename):
     try:
@@ -48,8 +48,11 @@ def render(ptri, delay):
     
     print("\n" * 100)   
     for line in content:
-        print(line.rstrip())  # Strip trailing newline characters
-        time.sleep(delay)
+        line_delay = delay / len(line.rstrip())
+        for char in line.rstrip():
+            print(char, end='', flush=True)  # Print each character without newline
+            time.sleep(line_delay)  # Delay based on the length of the line
+        print()  # Move to the next line after printing a line
 
 def main():
     filename = None
@@ -68,11 +71,11 @@ def main():
     while True:
         if filename is None:
             if Verbose == True:
-                print("No filename flag found, requesting spesification")
+                print("No filename flag found, requesting specification")
             filename = input("What is the name of your .ptri file (This must be in the same folder that I am in) For example, 'Testlist.ptri'\n(If I can't find the file, I will fallback to the python logo.): ")
         if delay == None:
             if Verbose == True:
-                print("No delay flag found, requesting spesification")
+                print("No delay flag found, requesting specification")
             delay = (input("Enter the delay time (in seconds) between each line rendering: "))
             if delay == '':
                  delay = 0.05
