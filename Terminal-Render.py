@@ -1,5 +1,4 @@
-import sys
-import time
+import sys, time, os, keyboard
 
 fallback = [   
     "         .?77777777777777$.              ",
@@ -38,8 +37,9 @@ def calculate_checksum(filename):
         return checksum
     except FileNotFoundError:
         return None
-
+    
 def render(ptri, delay):
+ 
     try:
         with open(ptri, 'r') as file:
             content = file.readlines()
@@ -48,8 +48,11 @@ def render(ptri, delay):
     
     print("\n" * 100)   
     for line in content:
-        line_delay = delay / len(line.rstrip())
-        for char in line.rstrip():
+        line = line.rstrip()
+        if not line:  # Skip empty lines
+            continue
+        line_delay = delay / len(line)
+        for char in line:
             print(char, end='', flush=True)  # Print each character without newline
             time.sleep(line_delay)  # Delay based on the length of the line
         print()  # Move to the next line after printing a line
@@ -59,7 +62,12 @@ def main():
     delay = None
     Verbose = False
     if input("Would you like verbose messages? [Y/n]") == 'y' or 'Y':
-        Verbose = True  
+        Verbose = True
+    if input("Would you like to see all of the possible ptri files to render? [Y/N]") == 'y' or 'Y':
+        os.system("ls *.ptri | more")
+        print('\n\n\nEnd of list, waiting 3 seconds.')
+        time.sleep(3)
+    input("Press the ⏎ key to continue")
     if len(sys.argv) > 1:
         # Use command-line arguments only when started for the first time
         for i in range(len(sys.argv)):
@@ -91,20 +99,18 @@ def main():
         ptri_checksum = calculate_checksum(filename)
         if ptri_checksum is None and Verbose == True:
             print(f"Error: File '{filename}' not found or empty. Fallback to default content.")
-            
-        
-        # Check if the total rendering time exceeds 10 seconds
+            content = fallback
         try:
             with open(filename, 'r') as file:
                 content = file.readlines()
             total_lines = len(content)
-        except FileNotFoundError:
+        except FileNotFoundError or PermissionError:
             total_lines = 28  # Default number of lines for the fallback content
         total_time = total_lines * delay
-        
-        if total_time > 10:
+        # Check if the total rendering time exceeds 10 seconds
+        if total_time > 60:
             if Verbose == True:
-                print(f"Error: The total rendering time ({total_time:.2f} seconds) exceeds 10 seconds. Defaulting to 0.05 per line.")
+                print(f"Error: The total rendering time ({total_time:.2f} seconds) exceeds 60 seconds. Defaulting to 0.05 per line.")
             delay = 0.05
             continue  # Restart the loop if total time exceeds 10 seconds
         
