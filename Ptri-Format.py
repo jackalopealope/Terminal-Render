@@ -2,7 +2,7 @@ import os
 
 def fix_ascii_files(directory):
     for filename in os.listdir(directory):
-        if filename.endswith(".ptri"):  # Process only text files
+        if filename.endswith(".ptri"):  # Process only ptri files
             filepath = os.path.join(directory, filename)
             with open(filepath, "r", encoding="utf8") as file:
                 lines = file.readlines()
