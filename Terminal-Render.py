@@ -63,11 +63,6 @@ def main():
     Verbose = False
     if input("Would you like verbose messages? [Y/n]") == 'y' or 'Y':
         Verbose = True
-    if input("Would you like to see all of the possible ptri files to render? [Y/N]") == 'y' or 'Y':
-        os.system("ls *.ptri | more")
-        print('\n\n\nEnd of list, waiting 3 seconds.')
-        time.sleep(3)
-    input("Press the ⏎ key to continue")
     if len(sys.argv) > 1:
         # Use command-line arguments only when started for the first time
         for i in range(len(sys.argv)):
@@ -80,7 +75,7 @@ def main():
         if filename is None:
             if Verbose == True:
                 print("No filename flag found, requesting specification")
-            filename = input("What is the name of your .ptri file (This must be in the same folder that I am in) For example, 'Testlist.ptri'\n(If I can't find the file, I will fallback to the python logo.): ")
+            filename = input("What is the full path of your .ptri file For example, 'C:\Users\Python\Ptri-files\Testlist.ptri'\n(If I can't find the file, I will fallback to the python logo.): ")
         if delay == None:
             if Verbose == True:
                 print("No delay flag found, requesting specification")
