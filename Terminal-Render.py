@@ -75,7 +75,7 @@ def main():
         if filename is None:
             if Verbose == True:
                 print("No filename flag found, requesting specification")
-            filename = input("What is the full path of your .ptri file For example, 'C:\Users\Python\Ptri-files\Testlist.ptri'\n(If I can't find the file, I will fallback to the python logo.): ")
+            filename = input("What is the full path of your .ptri file?")
         if delay == None:
             if Verbose == True:
                 print("No delay flag found, requesting specification")
